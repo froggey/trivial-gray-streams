@@ -289,13 +289,13 @@
 
 #+mezzano
 (progn
-  (defmethod sys.gray:stream-read-sequence
+  (defmethod mezzano.gray:stream-read-sequence
       ((s fundamental-input-stream) seq &optional start end)
     (or-fallback (stream-read-sequence s seq (or start 0) (or end (length seq)))))
-  (defmethod sys.gray:stream-write-sequence
+  (defmethod mezzano.gray:stream-write-sequence
       ((s fundamental-output-stream) seq &optional start end)
     (or-fallback (stream-write-sequence s seq (or start 0) (or end (length seq)))))
-  (defmethod sys.gray:stream-file-position
+  (defmethod mezzano.gray:stream-file-position
       ((stream fundamental-stream) &optional position)
     (if position
 	(setf (stream-file-position stream) position)

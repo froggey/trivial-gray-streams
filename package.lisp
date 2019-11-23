@@ -48,7 +48,7 @@
                #+openmcl :ccl
                #+lispworks :stream
                #+(or abcl genera) :gray-streams
-               #+mezzano :sys.gray
+               #+mezzano :mezzano.gray
                #-(or sbcl allegro cmu clisp openmcl lispworks ecl abcl mocl mocl genera mezzano) ...
                ,@gray-class-symbols
                ,@gray-function-symbols)

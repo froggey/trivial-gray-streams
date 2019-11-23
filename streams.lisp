@@ -74,15 +74,15 @@
 
 #+abcl
 (progn
-  (defmethod gray-streams:stream-read-sequence 
+  (defmethod gray-streams:stream-read-sequence
       ((s fundamental-input-stream) seq &optional start end)
     (or-fallback (stream-read-sequence s seq (or start 0) (or end (length seq)))))
-  
-  (defmethod gray-streams:stream-write-sequence 
+
+  (defmethod gray-streams:stream-write-sequence
       ((s fundamental-output-stream) seq &optional start end)
     (or-fallback (stream-write-sequence s seq (or start 0) (or end (length seq)))))
-  
-  (defmethod gray-streams:stream-write-string 
+
+  (defmethod gray-streams:stream-write-string
       ((stream xp::xp-structure) string &optional (start 0) (end (length string)))
     (xp::write-string+ string stream start end))
 
@@ -235,7 +235,7 @@
   (defmethod sb-gray:stream-write-sequence
       ((s fundamental-output-stream) seq &optional start end)
     (or-fallback (stream-write-sequence s seq (or start 0) (or end (length seq)))))
-  (defmethod sb-gray:stream-file-position 
+  (defmethod sb-gray:stream-file-position
       ((stream fundamental-stream) &optional position)
     (if position
         (setf (stream-file-position stream) position)
@@ -244,9 +244,9 @@
   (defmethod sb-gray:stream-line-length ((stream fundamental-stream))
     80))
 
-#+ecl
+#+(or ecl clasp)
 (progn
-  (defmethod gray::stream-file-position 
+  (defmethod gray::stream-file-position
     ((stream fundamental-stream) &optional position)
     (if position
       (setf (stream-file-position stream) position)
@@ -272,6 +272,21 @@
 	(setf (stream-file-position stream) position)
 	(stream-file-position stream))))
 
+#+genera
+(progn
+  (defmethod gray-streams:stream-read-sequence
+      ((s fundamental-input-stream) seq &optional start end)
+    (or-fallback (stream-read-sequence s seq (or start 0) (or end (length seq)))))
+  (defmethod gray-streams:stream-write-sequence
+      ((s fundamental-output-stream) seq &optional start end)
+    (or-fallback (stream-write-sequence s seq (or start 0) (or end (length seq)))))
+  (defmethod gray-streams:stream-file-position
+      ((stream fundamental-stream))
+    (stream-file-position stream))
+  (defmethod (setf gray-streams:stream-file-position)
+      (position (stream fundamental-stream))
+    (setf (stream-file-position stream) position)))
+
 #+mezzano
 (progn
   (defmethod sys.gray:stream-read-sequence
@@ -288,4 +303,3 @@
 
 ;; deprecated
 (defclass trivial-gray-stream-mixin () ())
-

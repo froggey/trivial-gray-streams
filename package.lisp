@@ -6,7 +6,7 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (require :gray-streams))
 
-#+cmu
+#+(or cmu genera)
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (require :gray-streams))
 
@@ -15,7 +15,7 @@
   (unless (fboundp 'excl:stream-write-string)
     (require "streamc.fasl")))
 
-#+ecl
+#+(or ecl clasp)
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (gray::redefine-cl-functions))
 
@@ -44,12 +44,12 @@
                #+sbcl :sb-gray
                #+allegro :excl
                #+cmu :ext
-               #+(or clisp ecl mocl) :gray
+               #+(or clisp ecl mocl clasp) :gray
                #+openmcl :ccl
                #+lispworks :stream
-               #+abcl :gray-streams
+               #+(or abcl genera) :gray-streams
                #+mezzano :sys.gray
-               #-(or sbcl allegro cmu clisp openmcl lispworks ecl abcl mocl mezzano) ...
+               #-(or sbcl allegro cmu clisp openmcl lispworks ecl abcl mocl mocl genera mezzano) ...
                ,@gray-class-symbols
                ,@gray-function-symbols)
               (:export
